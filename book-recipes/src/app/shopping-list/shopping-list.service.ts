@@ -21,11 +21,23 @@ export class ShoppingListService {
     this.ingredientsChanged.emit(this.ingredients.slice());
   }
 
-  addIngredients(ingredients: Ingredient[]) {
+  addIngredients(ings: Ingredient[]) {
     // for (let ingredient of ingredients) {
     //   this.addIngredient(ingredient);
     // }
-    this.ingredients.push(...ingredients);
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    //this.ingredients.push(...ingredients);
+    for(let ingredient of ings){
+      if(this.ingredients.filter(i => i.name === ingredient.name).length > 0){
+        //let index = this.ingredients.map((e) => {return e.name}).indexOf(ingredient.name);
+        //this.ingredients[index].amount += ingredient.amount;
+        this.ingredients.find(x => x.name === ingredient.name).amount += ingredient.amount;
+        console.log(ingredient.amount);
+      }
+      else {
+        this.ingredients.push({...ingredient}); //push(Fotis Grammenos) *** special thanks to Stergios for his support and his knowledge + contribution
+      }
+      this.ingredientsChanged.emit(this.ingredients.slice());
+    }
+    
   }
 }
