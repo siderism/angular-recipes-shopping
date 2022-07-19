@@ -9,18 +9,24 @@ import { Recipe } from './recipe.model';
 })
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-  private recipes: Recipe[] = [
-    new Recipe(
-      'A Test Recipe',
-      'Some details about ths recipe', 
-      'https://shop.foodbox.co.nz/files/img/recipe/basiccurry.jpg', 
-      [
-        new Ingredient('Meat', 2),
-        new Ingredient('French Fries', 15)
-      ])
-  ];
+  private recipes: Recipe[] = [];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'A Test Recipe',
+  //     'Some details about ths recipe', 
+  //     'https://shop.foodbox.co.nz/files/img/recipe/basiccurry.jpg', 
+  //     [
+  //       new Ingredient('Meat', 2),
+  //       new Ingredient('French Fries', 15)
+  //     ])
+  // ];
 
   constructor(private shoppinListService: ShoppingListService) { }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
   getRecipes() {
     return this.recipes.slice();
