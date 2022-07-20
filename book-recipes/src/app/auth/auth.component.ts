@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, ComponentFactoryResolver } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
+import { AlertComponent } from "../shared/alert/alert.component";
 import { AuthResponseData, AuthService } from "./auth.service";
 
 @Component({
@@ -42,8 +43,17 @@ export class AuthComponent {
             errorRes => {
                 console.log(errorRes);
                 this.error = errorRes;
+                this.showErrorAlert(errorRes);
                 this.isLoading = false;
             });
         form.reset();
+    }
+
+    onHandleError() {
+        this.error = null;
+    }
+
+    private showErrorAlert(message: string) {
+        const alertCmp = new AlertComponent();
     }
 }
